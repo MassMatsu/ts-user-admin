@@ -9,17 +9,19 @@ import {
   ModalCloseButton,
   FormControl,
   FormLabel,
-  Input
+  Input,
 } from '@chakra-ui/react';
 
-
+import {User} from '../../../types/api/user'
 
 type Props = {
   isOpen: boolean;
   onClose: () => void;
+  user: User | null;
+  
 };
 export const UserDetailModal: VFC<Props> = memo((props) => {
-  const {isOpen, onClose} = props;
+  const { isOpen, onClose, user} = props;
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} autoFocus={false}>
@@ -31,19 +33,19 @@ export const UserDetailModal: VFC<Props> = memo((props) => {
             <Stack spacing={4}>
               <FormControl>
                 <FormLabel>name</FormLabel>
-                <Input value='masa' isReadOnly />
+                <Input value={user?.username} isReadOnly />
               </FormControl>
               <FormControl>
                 <FormLabel>fullname</FormLabel>
-                <Input value='masato matsukawa' isReadOnly />
+                <Input value={user?.name} isReadOnly />
               </FormControl>
               <FormControl>
                 <FormLabel>email</FormLabel>
-                <Input value='masa@email.com' isReadOnly />
+                <Input value={user?.email} isReadOnly />
               </FormControl>
               <FormControl>
                 <FormLabel>tel</FormLabel>
-                <Input value='040165000' isReadOnly />
+                <Input value={user?.phone} isReadOnly />
               </FormControl>
             </Stack>
           </ModalBody>
