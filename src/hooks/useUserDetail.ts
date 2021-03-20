@@ -14,7 +14,7 @@ export const useUserDetail = () => {
     const {id, users} = props
     const targetUser = users.find((user) => user.id === id)
     
-    setUser(targetUser ?? null)
+    setUser(targetUser!)
    
   }, [])
 

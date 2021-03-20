@@ -5,30 +5,37 @@ import {
   Wrap,
   WrapItem,
   useDisclosure,
+
 } from '@chakra-ui/react';
 
 import { UserCard } from '../organism/user/UserCard';
 import { useAllUsers } from '../../hooks/useAllUsers';
 import { UserDetailModal } from '../../components/organism/user/UserDetailModal';
-import {useUserDetail} from '../../hooks/useUserDetail'
-
+import { useUserDetail } from '../../hooks/useUserDetail';
+import { useLoginUser } from '../../hooks/useLoginUser';
 
 export const UserAdmin: VFC = memo(() => {
   const { fetchUsers, users, loading } = useAllUsers();
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { getUserDetail, user} = useUserDetail()
+  const { getUserDetail, user } = useUserDetail();
+  const { loginUser } = useLoginUser();
+ 
+
+  console.log(loginUser);
 
   useEffect(() => {
     fetchUsers();
   }, [fetchUsers]);
 
-  const onClickUser = useCallback((id: number) => {
+  const onClickUser = useCallback(
+    (id: number) => {
+      getUserDetail({ id, users });
 
-    getUserDetail({id, users})
-    
-    onOpen();
-  }, [onOpen, getUserDetail, users]);
-  
+      onOpen();
+    },
+    [onOpen, getUserDetail, users]
+  );
+
   return (
     <>
       {loading ? (
@@ -36,7 +43,7 @@ export const UserAdmin: VFC = memo(() => {
           <Spinner />
         </Center>
       ) : (
-        <Wrap p={{ base: 4, md: 10 }}>
+        <Wrap p={{ base: 4, md: 10 }} >
           {users.map((user) => (
             <WrapItem key={user.id} mx='auto'>
               <UserCard
@@ -50,7 +57,7 @@ export const UserAdmin: VFC = memo(() => {
           ))}
         </Wrap>
       )}
-      <UserDetailModal isOpen={isOpen} onClose={onClose} user={user} />
+      <UserDetailModal isOpen={isOpen} onClose={onClose} user={user} isAdmin={loginUser?.isAdmin} />
     </>
   );
 });
