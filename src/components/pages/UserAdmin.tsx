@@ -20,9 +20,6 @@ export const UserAdmin: VFC = memo(() => {
   const { getUserDetail, user } = useUserDetail();
   const { loginUser } = useLoginUser();
  
-
-  console.log(loginUser);
-
   useEffect(() => {
     fetchUsers();
   }, [fetchUsers]);
