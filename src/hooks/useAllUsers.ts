@@ -15,7 +15,6 @@ export const useAllUsers = () => {
     setLoading(true)
     axios.get<Array<User>>(rootUrl).then((response) => {
       if (response.data) {
-        console.log(response.data)
         setUsers(response.data)
       }
     }).catch((error) => {
